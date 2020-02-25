@@ -1,11 +1,11 @@
 #[derive(Debug, Clone, Copy)]
 pub struct Unit {
-    lv: u32,
-    hp: u32,
-    hp_max: u32,
-    mp: u32,
-    mp_max: u32,
-    exp: u32,
+    pub lv: u32,
+    pub hp: u32,
+    pub hp_max: u32,
+    pub mp: u32,
+    pub mp_max: u32,
+    pub exp: u32,
 }
 
 impl Unit {

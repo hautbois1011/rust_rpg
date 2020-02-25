@@ -9,4 +9,6 @@ fn main() {
     let exp_effect = GiveExp::new(1000);
     exp_effect.effect(&mut u1);
     println!("{:?}", u1);
+    ChangeHp::new(-25).effect(&mut u1);
+    println!("{:?}", u1);
 }
