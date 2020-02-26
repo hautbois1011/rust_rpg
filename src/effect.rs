@@ -43,13 +43,15 @@ impl ChangeHp {
 
 impl Effect for ChangeHp {
     fn effect(&self, opponent: &mut Unit) {
-        opponent.hp = match self.mode {
-            HpType::Recovery => num::clamp(opponent.hp + self.hp, 0, opponent.hp_max),
+        let set = match self.mode {
+            HpType::Recovery => num::clamp(opponent.hp() + self.hp, 0, opponent.hp_max()),
             HpType::Damage => num::clamp(
-                opponent.hp as i32 - self.hp as i32,
+                opponent.hp() as i32 - self.hp as i32,
                 0,
-                opponent.hp_max as i32,
+                opponent.hp_max() as i32,
             ) as u32,
-        }
+        };
+
+        opponent.set_hp(set);
     }
 }

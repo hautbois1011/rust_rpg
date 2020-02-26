@@ -1,18 +1,12 @@
-#[derive(Debug, Clone, Copy)]
-pub enum Attribute {
-    NoAttribute,
-    Rock,
-    Scissors,
-    Paper,
-}
+use crate::attribute::*;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Equipment {
-    pub attribute: Attribute,
-    pub firepower: i32,
-    pub endurance: i32,
-    pub accuracy: i32,
-    pub avoidance: i32,
+    attribute: Attribute,
+    firepower: i32,
+    endurance: i32,
+    accuracy: i32,
+    avoidance: i32,
 }
 
 impl Equipment {
@@ -24,5 +18,25 @@ impl Equipment {
             accuracy: accr,
             avoidance: avd,
         }
+    }
+
+    pub fn attribute(&self) -> Attribute {
+        self.attribute
+    }
+
+    pub fn firepower(&self) -> i32 {
+        self.firepower
+    }
+
+    pub fn endurance(&self) -> i32 {
+        self.endurance
+    }
+
+    pub fn accuracy(&self) -> i32 {
+        self.accuracy
+    }
+
+    pub fn avoidance(&self) -> i32 {
+        self.avoidance
     }
 }

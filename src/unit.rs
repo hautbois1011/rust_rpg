@@ -1,15 +1,17 @@
+use crate::attribute::*;
 use crate::equipment::*;
 
 #[derive(Debug, Clone)]
 pub struct Unit {
-    pub lv: u32,
-    pub hp: u32,
-    pub hp_max: u32,
-    pub mp: u32,
-    pub mp_max: u32,
-    pub exp: u32,
+    lv: u32,
+    hp: u32,
+    hp_max: u32,
+    mp: u32,
+    mp_max: u32,
+    exp: u32,
 
-    pub equipment_list: Vec<Equipment>,
+    attribute: Attribute,
+    equipment_list: Vec<Equipment>,
 }
 
 impl Unit {
@@ -21,9 +23,11 @@ impl Unit {
             mp: 0,
             mp_max: 0,
             exp: 0,
+            attribute: Attribute::NoAttribute,
             equipment_list: Vec::new(),
         };
         u.update();
+        u.fullfill();
         u
     }
 
@@ -50,8 +54,37 @@ impl Unit {
         self.equipment_list.push(equipment);
     }
 
+    // getter / setter
+
+    pub fn attribute(&self) -> Attribute {
+        self.attribute
+    }
+
+    pub fn set_attribute(&mut self, attr: Attribute) {
+        self.attribute = attr;
+    }
+
+    pub fn hp(&self) -> u32 {
+        self.hp
+    }
+
+    pub fn set_hp(&mut self, hp: u32) {
+        self.hp = hp;
+    }
+
+    pub fn hp_max(&self) -> u32 {
+        self.hp_max
+    }
+
+    // helper function
+
     fn update(&mut self) {
         self.hp_max = 20 + (self.lv as f32).sqrt().floor() as u32;
         self.mp_max = 20 + ((self.lv as f32) / 5.0).floor() as u32;
+    }
+
+    fn fullfill(&mut self) {
+        self.hp = self.hp_max;
+        self.mp = self.mp_max;
     }
 }
