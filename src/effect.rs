@@ -5,6 +5,8 @@ pub trait Effect {
     fn effect(&self, opponent: &mut Unit);
 }
 
+//----------------------------------------------------
+
 pub struct GiveExp {
     exp: u32,
 }
@@ -21,18 +23,33 @@ impl Effect for GiveExp {
     }
 }
 
+//----------------------------------------------------
+
+pub enum HpType {
+    Recovery,
+    Damage,
+}
+
 pub struct ChangeHp {
-    hp: i32,
+    hp: u32,
+    mode: HpType,
 }
 
 impl ChangeHp {
-    pub fn new(hp: i32) -> ChangeHp {
-        ChangeHp { hp: hp }
+    pub fn new(hp: u32, mode: HpType) -> ChangeHp {
+        ChangeHp { hp: hp, mode: mode }
     }
 }
 
 impl Effect for ChangeHp {
     fn effect(&self, opponent: &mut Unit) {
-        opponent.hp = num::clamp(opponent.hp as i32 + self.hp, 0i32, opponent.hp_max as i32) as u32;
+        opponent.hp = match self.mode {
+            HpType::Recovery => num::clamp(opponent.hp + self.hp, 0, opponent.hp_max),
+            HpType::Damage => num::clamp(
+                opponent.hp as i32 - self.hp as i32,
+                0,
+                opponent.hp_max as i32,
+            ) as u32,
+        }
     }
 }
